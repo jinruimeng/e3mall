@@ -9,7 +9,12 @@ import cn.e3mall.pojo.TbItemDesc;
 public interface ItemService {
 
 	TbItem getItemById(long itemId);
+	TbItemDesc getItemDescById(long itemId);
 	EasyUIDataGridResult getItemList(int page, int rows);
 	E3Result addItem(TbItem item, String desc);
-	TbItemDesc getItemDescById(long itemId);
+	E3Result updateItem(TbItem item, String desc);
+	E3Result deleteItem(long itemId);
+	E3Result instockItem(long itemId);
+	E3Result reshelfItem(long itemId);
+	
 }

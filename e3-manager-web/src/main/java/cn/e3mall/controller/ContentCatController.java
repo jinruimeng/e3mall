@@ -39,11 +39,26 @@ public class ContentCatController {
 	 */
 	@RequestMapping(value="/content/category/create", method=RequestMethod.POST)
 	@ResponseBody
-	public E3Result createContentCategory(Long parentId, String name) {
+	public E3Result createContentCategory(long parentId, String name) {
 		//调用服务添加节点
 		E3Result e3Result = contentCategoryService.addContentCategory(parentId, name);
 		return e3Result;
 	}
 	
+	@RequestMapping(value="/content/category/update", method=RequestMethod.POST)
+	@ResponseBody
+	public E3Result updateContentCategory(long id, String name) {
+		//修改服务添加节点
+		E3Result e3Result = contentCategoryService.updateContentCategory(id, name);
+		return e3Result;
+	}
+	
+	@RequestMapping(value="/content/category/delete/", method=RequestMethod.POST)
+	@ResponseBody
+	public E3Result deleteContentCategory(long id) {
+		//删除服务添加节点
+		E3Result e3Result = contentCategoryService.deleteContentCategory(id);
+		return e3Result;
+	}
 	
 }
