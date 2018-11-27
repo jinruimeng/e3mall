@@ -22,7 +22,8 @@ public class FreeMarkerTest {
 		//2、创建一个Configuration对象
 		Configuration configuration = new Configuration(Configuration.getVersion());
 		//3、设置模板文件保存的目录
-		configuration.setDirectoryForTemplateLoading(new File("E:/Users/Administrator/workspace/Git/e3mall/e3-item-web/src/main/webapp/WEB-INF/ftl"));
+		configuration.setDirectoryForTemplateLoading(new File("E:/workspace/git-repository/e3mall/e3-item-web/src/main/webapp/WEB-INF/ftl"));
+//		configuration.setDirectoryForTemplateLoading(new File("E:/Users/Administrator/workspace/Git/e3mall/e3-item-web/src/main/webapp/WEB-INF/ftl"));
 		//4、模板文件的编码格式，一般就是utf-8
 		configuration.setDefaultEncoding("utf-8");
 		//5、加载一个模板文件，创建一个模板对象。

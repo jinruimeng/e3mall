@@ -1,13 +1,15 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>cn.e3mall</groupId>
-    <artifactId>e3-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-  </parent>
-  <artifactId>e3-portal-web</artifactId>
-  <packaging>war</packaging>
-  <dependencies>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>cn.e3mall</groupId>
+		<artifactId>e3-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>e3-portal-web</artifactId>
+	<packaging>war</packaging>
+	<dependencies>
 		<dependency>
 			<groupId>cn.e3mall</groupId>
 			<artifactId>e3-content-interface</artifactId>
@@ -94,6 +96,9 @@
 				<configuration>
 					<path>/</path>
 					<port>8082</port>
+					<url>http://192.168.1.194:8180/manager/text</url>
+					<username>jinruimeng</username>
+					<password>0012345678</password>
 				</configuration>
 			</plugin>
 		</plugins>
