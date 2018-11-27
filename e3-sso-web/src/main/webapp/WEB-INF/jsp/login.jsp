@@ -138,7 +138,7 @@
 					if (data.status == 200) {
 						jAlert('登录成功！',"提示", function(){
 							if (redirectUrl == "") {
-								location.href = "http://192.168.1.111:8082";
+								location.href = "http://192.168.1.194:8180";
 							} else {
 								location.href = redirectUrl;
 							}
