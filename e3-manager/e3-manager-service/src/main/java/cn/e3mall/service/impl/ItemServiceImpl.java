@@ -189,6 +189,12 @@ public class ItemServiceImpl implements ItemService {
 		itemDesc.setItemDesc(desc);
 		itemDescMapper.updateByPrimaryKeySelective(itemDesc);
 
+		try {
+			jedisClient.del(REDIS_ITEM_PRE + ":" + itemId + ":BASE");
+			jedisClient.del(REDIS_ITEM_PRE + ":" + itemId + ":DESC");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		jmsTemplate.send(topicDestination, new MessageCreator() {
 			@Override
 			public Message createMessage(Session session) throws JMSException {
@@ -211,6 +217,12 @@ public class ItemServiceImpl implements ItemService {
 				return textMessage;
 			}
 		});
+		try {
+			jedisClient.del(REDIS_ITEM_PRE + ":" + itemId + ":BASE");
+			jedisClient.del(REDIS_ITEM_PRE + ":" + itemId + ":DESC");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return E3Result.ok();
 	}
 
@@ -221,6 +233,12 @@ public class ItemServiceImpl implements ItemService {
 		item.setId(itemId);
 		item.setStatus((byte) 2);
 		itemMapper.updateByPrimaryKeySelective(item);
+		try {
+			jedisClient.del(REDIS_ITEM_PRE + ":" + itemId + ":BASE");
+			jedisClient.del(REDIS_ITEM_PRE + ":" + itemId + ":DESC");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		jmsTemplate.send(topicDestination, new MessageCreator() {
 			@Override
 			public Message createMessage(Session session) throws JMSException {
@@ -238,6 +256,12 @@ public class ItemServiceImpl implements ItemService {
 		item.setId(itemId);
 		item.setStatus((byte) 1);
 		itemMapper.updateByPrimaryKeySelective(item);
+		try {
+			jedisClient.del(REDIS_ITEM_PRE + ":" + itemId + ":BASE");
+			jedisClient.del(REDIS_ITEM_PRE + ":" + itemId + ":DESC");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		jmsTemplate.send(topicDestination, new MessageCreator() {
 			@Override
 			public Message createMessage(Session session) throws JMSException {

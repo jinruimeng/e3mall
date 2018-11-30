@@ -46,12 +46,12 @@
       </div>
       <div class="cartTbody">
 
-		<div class="cartColumnhd">
+<!-- 		<div class="cartColumnhd">
 			<div class="cartCheckbox">
 				<input name="cart_list_yx" id="Zpu" type="checkbox"
 					onclick="PutongAll(this)">优选商品 
 			</div>
-		</div>
+		</div> -->
 		<div class="cartList youxuan" id="all_putong">
 		<div style="margin: 20px; text-align: center; display: none;" id="danjianload"></div>
 		<div id="danjian">

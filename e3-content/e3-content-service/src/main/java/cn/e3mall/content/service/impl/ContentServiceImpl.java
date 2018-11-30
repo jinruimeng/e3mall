@@ -47,7 +47,6 @@ public class ContentServiceImpl implements ContentService {
 
 	@Value("${CONTENT_LIST}")
 	private String CONTENT_LIST;
-
 	/**
 	 * 根据内容分类id查询内容列表
 	 * <p>

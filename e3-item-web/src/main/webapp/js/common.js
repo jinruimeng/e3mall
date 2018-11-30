@@ -13,7 +13,7 @@
 	var urlArr = hostUrl.split('.');
 //	var domain = urlArr[1]+'.'+urlArr[2];
 	var domain;
-	if("192" == urlArr[0]){
+	if("192" == urlArr[0] || "139" == urlArr[0]){
 		domain = urlArr[0]+'.'+urlArr[1]+'.'+urlArr[2];
 	}else{
 		domain = urlArr[1]+'.'+urlArr[2];
@@ -170,7 +170,7 @@
 			backurl = (typeof(backurl) === 'undefined' || !backurl) ? window.location.href : backurl;
 			//过滤回调地址锚点
 			backurlArr = backurl.split('#');
-			if("192" == urlArr[0]){
+			if("192" == urlArr[0] || "139" == urlArr[0]){
 				url = 'http://'+domain+"/ajaxSetCity/getCasLoginUrl/";
 			}else{
 				url = 'http://www.'+domain+"/ajaxSetCity/getCasLoginUrl/";
