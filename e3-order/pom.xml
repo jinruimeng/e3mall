@@ -29,7 +29,7 @@
 				<configuration>
 					<path>/</path>
 					<port>8091</port>
-					<url>http://192.168.1.165:8280/manager/text</url>
+					<url>http://101.132.67.250:8580/manager/text</url>
 					<username>jinruimeng</username>
 					<password>0012345678</password>
 				</configuration>

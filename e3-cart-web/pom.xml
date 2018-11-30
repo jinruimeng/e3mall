@@ -106,7 +106,7 @@
 				<configuration>
 					<path>/</path>
 					<port>8090</port>
-					<url>http://192.168.1.195:8280/manager/text</url>
+					<url>http://139.196.90.105:8580/manager/text</url>
 					<username>jinruimeng</username>
 					<password>0012345678</password>
 				</configuration>

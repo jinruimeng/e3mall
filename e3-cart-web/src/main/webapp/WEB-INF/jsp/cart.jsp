@@ -65,13 +65,13 @@
 						</div>
 						<div class="pItem pGoods">
 							<div class="cart_pimg">
-								<a target="_blank" title="${cart.title }" href="http://192.168.1.195:8080/item/${cart.id }.html">
+								<a target="_blank" title="${cart.title }" href="http://139.196.90.105:8380/item/${cart.id }.html">
 								<img src="${cart.image }" style="width: 60px;height: 60px;"/>
 								</a>
 							</div>
 							<div class="cart_pname">
 								<div>
-								<a target="_blank" href="http://192.168.1.195:8080/item/${cart.id }.html">${cart.title }</a>
+								<a target="_blank" href="http://139.196.90.105:8380/item/${cart.id }.html">${cart.title }</a>
 								</div>
 								<div class="cdzg">产地直供</div>
 							</div>
@@ -117,8 +117,8 @@
         </div>
       </div>
       <div class="cartJsuan">
-         <input onclick="javascript:document.location.href='http://192.168.1.194:8180'" class="goshop" value="继续购物" type="button">
-         <input onclick="javascript:document.location.href='http://192.168.1.195:8380/order/order-cart.html'" class="jiesuan youxuan" value="去结算" type="button">
+         <input onclick="javascript:document.location.href='http://139.196.90.105:8180'" class="goshop" value="继续购物" type="button">
+         <input onclick="javascript:document.location.href='http://139.196.90.105:8680/order/order-cart.html'" class="jiesuan youxuan" value="去结算" type="button">
       </div>
     </div>
 </div>
