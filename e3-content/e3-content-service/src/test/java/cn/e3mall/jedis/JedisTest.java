@@ -15,7 +15,7 @@ public class JedisTest {
 	@Test
 	public void testJedis() throws Exception {
 		//创建一个连接Jedis对象，参数：host、port
-		Jedis jedis = new Jedis("192.168.1.103", 7001);
+		Jedis jedis = new Jedis("47.100.205.231", 7001);
 		//直接使用jedis操作redis。所有jedis的命令都对应一个方法。
 		jedis.set("test123", "my first jedis test");
 		String string = jedis.get("test123");
@@ -27,7 +27,7 @@ public class JedisTest {
 	@Test
 	public void testJedisPool() throws Exception {
 		//创建一个连接池对象，两个参数host、port
-		JedisPool jedisPool = new JedisPool("192.168.1.103", 6379);
+		JedisPool jedisPool = new JedisPool("47.100.205.231", 6379);
 		//从连接池获得一个连接，就是一个jedis对象。
 		Jedis jedis = jedisPool.getResource();
 		//使用jedis操作redis
@@ -43,12 +43,12 @@ public class JedisTest {
 	public void testJedisCluster() throws Exception {
 		//创建一个JedisCluster对象。有一个参数nodes是一个set类型。set中包含若干个HostAndPort对象。
 		Set<HostAndPort> nodes = new HashSet<>();
-		nodes.add(new HostAndPort("192.168.1.103", 7001));
-		nodes.add(new HostAndPort("192.168.1.103", 7002));
-		nodes.add(new HostAndPort("192.168.1.103", 7003));
-		nodes.add(new HostAndPort("192.168.1.103", 7004));
-		nodes.add(new HostAndPort("192.168.1.103", 7005));
-		nodes.add(new HostAndPort("192.168.1.103", 7006));
+		nodes.add(new HostAndPort("47.100.205.231", 7001));
+		nodes.add(new HostAndPort("47.100.205.231", 7002));
+		nodes.add(new HostAndPort("47.100.205.231", 7003));
+		nodes.add(new HostAndPort("47.100.205.231", 7004));
+		nodes.add(new HostAndPort("47.100.205.231", 7005));
+		nodes.add(new HostAndPort("47.100.205.231", 7006));
 		JedisCluster jedisCluster = new JedisCluster(nodes);
 		//直接使用JedisCluster对象操作redis。
 		jedisCluster.set("test", "123");
