@@ -120,7 +120,7 @@
 				<configuration>
 					<path>/</path>
 					<port>8081</port>
-<!-- 					<url>http://139.196.90.105:8080/manager/text</url> -->
+					<url>http://139.196.90.105:8080/manager/text</url>
 					<username>jinruimeng</username>
 					<password>0012345678</password>
 				</configuration>
