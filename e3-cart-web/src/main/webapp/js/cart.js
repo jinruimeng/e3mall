@@ -26,7 +26,7 @@ var CART = {
 		 */
 	},
 
-	//单选
+	// 单选
 	selecsingle : function(){
 		$('.putong').click(function(){
 			var _thisInput = $(this).parent('div').parent('div').find(".itemnum").siblings("input");
@@ -39,26 +39,28 @@ var CART = {
 		});
 	},
 	
-	//全选
+	// 全选
 	selectall : function(){
 		$('#Zall').click(function(){
 			if(document.getElementById("Zall").checked){
 		        var oneCheck = $("input[name='cart_list']");
 		        for(var i=0;i<oneCheck.length;i++){
 		            oneCheck[i].prop("checked", true);
-		            //oneCheck.eq(i).prop("checked",true);            
+		            // oneCheck.eq(i).prop("checked",true);
 		            var _thisInput = $(this).parent('div').find(".itemnum").eq(i).siblings("input");
 		            $.post("/cart/update/status/"+_thisInput.attr("itemId")+"/1"+ ".action");
 		        }
-		        refreshAllShopePrice();
-		        
+		        refreshAllShopePrice();       
 		    }else{
 		        var oneCheck = $("input[name='cart_list']");
 		        for(var i=0;i<oneCheck.length;i++){
-		            //oneCheck[i].checked = false;
+		            // oneCheck[i].checked = false;
 		            oneCheck[i].removeAttr("checked");
 		            var _thisInput = $(this).parent('div').find(".itemnum").eq(i).siblings("input");
-		            $.post("/cart/update/status/"+_thisInput.attr("itemId")+"/0"+ ".action");
+		            oneCheck[i].checked = true;
+		            // oneCheck.eq(i).prop("checked","checked");
+		            var _thisInput = $(this).parent('div').parent('div').find(".itemnum").siblings("input");
+		            $.post("/cart/update/status/"+_thisInput.attr("itemId")+"/1"+ ".action");
 		        }
 		        // 反选总价清零
 		        $("#allMoney2").html(0).priceFormat({ // 价格格式化插件
@@ -69,8 +71,7 @@ var CART = {
 		    }
 		});
 	},
-	
-	
+		
 	refreshTotalPrice : function(itemId){ // 重新计算小计
 		var subtotal = 0;
 		$(".itemnum").each(function(i,e){
