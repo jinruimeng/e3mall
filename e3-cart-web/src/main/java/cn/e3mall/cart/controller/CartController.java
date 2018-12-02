@@ -193,4 +193,35 @@ public class CartController {
 		//返回逻辑视图
 		return "redirect:/cart/cart.html";
 	}
+	
+	/**
+	 * 更新购物车商品状态
+	 */
+	@RequestMapping("/cart/update/status/{itemId}/{status}")
+	public E3Result updateCartStatus(@PathVariable Long itemId, Byte status,HttpServletRequest request,
+			HttpServletResponse response) {
+		//判断用户是否为登录状态
+		TbUser user = (TbUser) request.getAttribute("user");
+		if (user != null) {
+			cartService.updateCartNum(user.getId(), itemId, status);
+			return E3Result.ok();
+		}else {
+			return E3Result.build(201, "未登录");
+		}
+/*		//从cookie中取购物车列表
+		List<TbItem> cartList = getCartListFromCookie(request);
+		//遍历商品列表找到对应的商品
+		for (TbItem tbItem : cartList) {
+			if (tbItem.getId().longValue() == itemId) {
+				//更新数量
+				tbItem.setStatus(status);
+				break;
+			}
+		}
+		//把购物车列表写回cookie
+		CookieUtils.setCookie(request, response, "cart", JsonUtils.objectToJson(cartList), COOKIE_CART_EXPIRE, true);
+		//返回成功
+		return E3Result.ok();*/
+	}
+	
 }

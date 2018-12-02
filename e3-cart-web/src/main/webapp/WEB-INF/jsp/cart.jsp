@@ -34,7 +34,7 @@
 	</div>
 	<div class="cartMain">
       <div class="cartThead">
-        <div class="tCol tCheckbox"><input name="acart_list_check" id="Zall" type="checkbox" onclick="Zall(this)"> 全选</div>
+        <div class="tCol tCheckbox"><input name="acart_list_check" id="Zall" type="checkbox" checked="checked"> 全选</div>
         <div class="tCol tGoods">商品</div>
         <div class="tCol tPrice">单价</div>
         <div class="tCol tPromotion">优惠</div>
@@ -61,7 +61,7 @@
 				<div class="cartPInfo" id="danjian-0-229363">
 					<div class="clearit">
 						<div class="pItem pCheckbox">
-							<input name="cart_list" class="putong"	value="danjian-0-229363" type="checkbox"/>
+							<input name="cart_list" class="putong"	value="danjian-0-229363" type="checkbox" checked="checked"/>
 						</div>
 						<div class="pItem pGoods">
 							<div class="cart_pimg">
