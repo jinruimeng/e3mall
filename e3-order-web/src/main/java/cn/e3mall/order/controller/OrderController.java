@@ -1,13 +1,12 @@
 package cn.e3mall.order.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -42,7 +41,13 @@ public class OrderController {
 		//取支付方式列表
 		//静态数据
 		//根据用户id取购物车列表
-		List<TbItem> cartList = cartService.getCartList(user.getId());
+		List<TbItem> allCartList = cartService.getCartList(user.getId());
+		List<TbItem> cartList = new ArrayList<>();
+		for(TbItem cart:allCartList) {
+			if(cart.getStatus()==(byte) '1') {
+				cartList.add(cart);
+			}
+		}
 		//把购物车列表传递给jsp
 		request.setAttribute("cartList", cartList);
 		//返回页面
@@ -62,11 +67,15 @@ public class OrderController {
 		if (e3Result.getStatus() == 200) {
 			//清空购物车
 			cartService.clearCartItem(user.getId());
+			//把订单号传递给页面
+			request.setAttribute("orderId", e3Result.getData());
+			request.setAttribute("payment", orderInfo.getPayment());
+			//返回逻辑视图
+			return "success";
+		}else{
+			cartService.resetCartItem(user.getId());
+			return "exception";
 		}
-		//把订单号传递给页面
-		request.setAttribute("orderId", e3Result.getData());
-		request.setAttribute("payment", orderInfo.getPayment());
-		//返回逻辑视图
-		return "success";
+
 	}
 }

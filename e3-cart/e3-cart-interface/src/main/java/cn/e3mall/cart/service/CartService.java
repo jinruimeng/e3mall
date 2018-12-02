@@ -11,6 +11,9 @@ public interface CartService {
 	E3Result mergeCart(long userId, List<TbItem> itemList);
 	List<TbItem> getCartList(long userId);
 	E3Result updateCartNum(long userId, long itemId, int num);
+	E3Result updateCartStatus(long userId, long itemId, Byte status);
 	E3Result deleteCartItem(long userId, long itemId);
 	E3Result clearCartItem(long userId);
+	E3Result resetCartItem(long userId);
+	
 }
