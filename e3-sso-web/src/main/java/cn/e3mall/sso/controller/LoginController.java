@@ -39,8 +39,12 @@ public class LoginController {
 	private String TOKEN_KEY;
 
 	@RequestMapping("/page/login")
-	public String showLogin(String redirect, Model model) {
-		model.addAttribute("redirect", redirect);
+	public String showLogin(String redirect, Model model, HttpServletRequest request) {
+		if (redirect != null) {
+			model.addAttribute("redirect", redirect);
+		} else {
+			model.addAttribute("redirect", request.getHeader("Referer"));
+		}
 		return "login";
 	}
 
