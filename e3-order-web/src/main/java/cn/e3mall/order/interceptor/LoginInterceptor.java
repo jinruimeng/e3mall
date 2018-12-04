@@ -20,55 +20,65 @@ import cn.e3mall.sso.service.TokenService;
 
 /**
  * 用户登录拦截器
- * <p>Title: LoginInterceptor</p>
- * <p>Description: </p>
- * <p>Company: www.itcast.cn</p> 
+ * <p>
+ * Title: LoginInterceptor
+ * </p>
+ * <p>
+ * Description:
+ * </p>
+ * <p>
+ * Company: www.itcast.cn
+ * </p>
+ * 
  * @version 1.0
  */
 public class LoginInterceptor implements HandlerInterceptor {
-	
+
 	@Value("${SSO_URL}")
 	private String SSO_URL;
-	
+
 	@Autowired
 	private TokenService tokenService;
 	@Autowired
-	private CartService  cartService;
-	
+	private CartService cartService;
+
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		//从cookie中取token
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+			throws Exception {
+		// 从cookie中取token
 		String token = CookieUtils.getCookieValue(request, "token");
-		//判断token是否存在
+		// 判断token是否存在
 		if (StringUtils.isBlank(token)) {
-			//如果token不存在，未登录状态，跳转到sso系统的登录页面。用户登录成功后，跳转到当前请求的url
-			//JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "当前未登录，请先登录.", "提示",JOptionPane.PLAIN_MESSAGE);
+			// 如果token不存在，未登录状态，跳转到sso系统的登录页面。用户登录成功后，跳转到当前请求的url
+			// JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "当前未登录，请先登录.",
+			// "提示",JOptionPane.PLAIN_MESSAGE);
 //			response.sendRedirect(SSO_URL + "/page/login?redirect=" + request.getRequestURL());
 			response.sendRedirect(SSO_URL + "/page/login?redirect=" + "http://139.196.90.105:8580/cart/cart.html");
-			//拦截
+			// 拦截
 			return false;
 		}
-		//如果token存在，需要调用sso系统的服务，根据token取用户信息
+		// 如果token存在，需要调用sso系统的服务，根据token取用户信息
 		E3Result e3Result = tokenService.getUserByToken(token);
-		//如果取不到，用户登录已经过期，需要登录。
+		// 如果取不到，用户登录已经过期，需要登录。
 		if (e3Result.getStatus() != 200) {
-			//如果token不存在，未登录状态，跳转到sso系统的登录页面。用户登录成功后，跳转到当前请求的url
-			//JOptionPane.showMessageDialog(null, "登录已过期，请重新登录.", "提示",JOptionPane.PLAIN_MESSAGE);
+			// 如果token不存在，未登录状态，跳转到sso系统的登录页面。用户登录成功后，跳转到当前请求的url
+			// JOptionPane.showMessageDialog(null, "登录已过期，请重新登录.",
+			// "提示",JOptionPane.PLAIN_MESSAGE);
 //			response.sendRedirect(SSO_URL + "/page/login?redirect=" + request.getRequestURL());
 			response.sendRedirect(SSO_URL + "/page/login?redirect=" + "http://139.196.90.105:8580/cart/cart.html");
-			//拦截
+			// 拦截
 			return false;
 		}
-		//如果取到用户信息，是登录状态，需要把用户信息写入request。
+		// 如果取到用户信息，是登录状态，需要把用户信息写入request。
 		TbUser user = (TbUser) e3Result.getData();
 		request.setAttribute("user", user);
-		//判断cookie中是否有购物车数据，如果有就合并到服务端。
+		// 判断cookie中是否有购物车数据，如果有就合并到服务端。
 		String jsonCartList = CookieUtils.getCookieValue(request, "cart", true);
 		if (StringUtils.isNoneBlank(jsonCartList)) {
-			//合并购物车
+			// 合并购物车
 			cartService.mergeCart(user.getId(), JsonUtils.jsonToList(jsonCartList, TbItem.class));
 		}
-		//放行
+		// 放行
 		return true;
 	}
 
@@ -85,7 +95,5 @@ public class LoginInterceptor implements HandlerInterceptor {
 		// TODO Auto-generated method stub
 
 	}
-
-	
 
 }
