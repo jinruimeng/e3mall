@@ -22,7 +22,7 @@
 <jsp:include page="commons/shortcut.jsp" />
 <!--shortcut end-->
 <div class="logoPay">
-	<div class="logoPayBox"><a href="http://www.e3mall.cn"><img src="/images/logo.jpg" width="345" height="73" border="0"></a></div>
+	<div class="logoPayBox"><a href="http://139.196.90.105:8180"><img src="/images/logo.jpg" width="345" height="73" border="0"></a></div>
 </div>
 <div class="pay_main">
 	<div class="pay_newbox">
@@ -38,7 +38,7 @@
     </div>   
 	<div class="pay_ment">
             	<div class="pay_name"><em class="floatleft">支付平台</em>
-        	<a href="http://www.e3mall.cn/www/143/141.html" class="pay_lj" target="_blank"><i class="floatleft"></i><em class="floatleft">了解银行限额</em></a>
+        	<a href="http://139.196.90.105:8180/www/143/141.html" class="pay_lj" target="_blank"><i class="floatleft"></i><em class="floatleft">了解银行限额</em></a>
         </div>
         <div class="pay_ment_0 clearfix">
         	<ul>
