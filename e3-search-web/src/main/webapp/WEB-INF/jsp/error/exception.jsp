@@ -30,7 +30,7 @@
 						<h2>HTTP错误 404 - 文件或目录未找到</h2>
 						<p>
 							<span id="totalSecond">2</span>秒后自动跳转到首页，如不自动跳转，请按<a
-								href="http://www.e3mall.cn/">回到首页</a>
+								href="http://139.196.90.105:8180/">回到首页</a>
 						</p>
 						<div class="clear"></div>
 				</div>

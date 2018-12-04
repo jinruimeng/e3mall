@@ -43,7 +43,8 @@ public class LoginInterceptor implements HandlerInterceptor {
 		if (StringUtils.isBlank(token)) {
 			//如果token不存在，未登录状态，跳转到sso系统的登录页面。用户登录成功后，跳转到当前请求的url
 			//JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "当前未登录，请先登录.", "提示",JOptionPane.PLAIN_MESSAGE);
-			response.sendRedirect(SSO_URL + "/page/login?redirect=" + request.getRequestURL());
+//			response.sendRedirect(SSO_URL + "/page/login?redirect=" + request.getRequestURL());
+			response.sendRedirect(SSO_URL + "/page/login?redirect=" + "http://139.196.90.105:8580/cart/cart.html");
 			//拦截
 			return false;
 		}
@@ -53,7 +54,8 @@ public class LoginInterceptor implements HandlerInterceptor {
 		if (e3Result.getStatus() != 200) {
 			//如果token不存在，未登录状态，跳转到sso系统的登录页面。用户登录成功后，跳转到当前请求的url
 			//JOptionPane.showMessageDialog(null, "登录已过期，请重新登录.", "提示",JOptionPane.PLAIN_MESSAGE);
-			response.sendRedirect(SSO_URL + "/page/login?redirect=" + request.getRequestURL());
+//			response.sendRedirect(SSO_URL + "/page/login?redirect=" + request.getRequestURL());
+			response.sendRedirect(SSO_URL + "/page/login?redirect=" + "http://139.196.90.105:8580/cart/cart.html");
 			//拦截
 			return false;
 		}
