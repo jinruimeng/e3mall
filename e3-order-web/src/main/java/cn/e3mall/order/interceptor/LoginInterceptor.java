@@ -36,6 +36,9 @@ public class LoginInterceptor implements HandlerInterceptor {
 
 	@Value("${SSO_URL}")
 	private String SSO_URL;
+	
+	@Value("${CART_URL}")
+	private String CART_URL;
 
 	@Autowired
 	private TokenService tokenService;
@@ -53,7 +56,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 			// JOptionPane.showMessageDialog(JOptionPane.getRootFrame(), "当前未登录，请先登录.",
 			// "提示",JOptionPane.PLAIN_MESSAGE);
 //			response.sendRedirect(SSO_URL + "/page/login?redirect=" + request.getRequestURL());
-			response.sendRedirect(SSO_URL + "/page/login?redirect=" + "http://139.196.90.105:8580/cart/cart.html");
+			response.sendRedirect(SSO_URL + "/page/login?redirect=" + CART_URL + "/cart/cart.html");
 			// 拦截
 			return false;
 		}
