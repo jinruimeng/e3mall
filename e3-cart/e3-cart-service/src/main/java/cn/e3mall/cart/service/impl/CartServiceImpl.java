@@ -51,8 +51,8 @@ public class CartServiceImpl implements CartService {
 			// 把json转换成TbItem
 			TbItem item = JsonUtils.jsonToPojo(json, TbItem.class);
 			item.setNum(item.getNum() + num);
-			item.setStatus((byte) '0');
-			//0 未选中，1已选中
+			item.setStatus((byte)0);
+			// 0 未选中，1已选中
 			// 写回redis
 			jedisClient.hset(REDIS_CART_PRE + ":" + userId, itemId + "", JsonUtils.objectToJson(item));
 			return E3Result.ok();
@@ -61,8 +61,8 @@ public class CartServiceImpl implements CartService {
 		TbItem item = itemMapper.selectByPrimaryKey(itemId);
 		// 设置购物车数据量
 		item.setNum(num);
-		item.setStatus((byte) '0');
-		//0 未选中，1已选中
+		item.setStatus((byte) 0);
+		// 0 未选中，1已选中
 		// 取一张图片
 		String image = item.getImage();
 		if (StringUtils.isNotBlank(image)) {
@@ -124,7 +124,7 @@ public class CartServiceImpl implements CartService {
 		jedisClient.hset(REDIS_CART_PRE + ":" + userId, itemId + "", JsonUtils.objectToJson(tbItem));
 		return E3Result.ok();
 	}
-	
+
 	@Override
 	public E3Result deleteCartItem(long userId, long itemId) {
 		// 删除购物车商品
@@ -137,16 +137,16 @@ public class CartServiceImpl implements CartService {
 		// 取出未结算的商品
 		List<TbItem> allCartList = getCartList(userId);
 		List<TbItem> cartList = new ArrayList<>();
-		for(TbItem item:allCartList){
-			if(item.getStatus()==(byte) '0') {
+		for (TbItem item : allCartList) {
+			if (item.getStatus() == 0) {
 				cartList.add(item);
 			}
 		}
 		// 删除购物车信息
 		jedisClient.del(REDIS_CART_PRE + ":" + userId);
-		//把未结算的商品添加到缓存
-		if(cartList.size()!=0) {
-			for(TbItem item:allCartList){
+		// 把未结算的商品添加到缓存
+		if (cartList.size() != 0) {
+			for (TbItem item : cartList) {
 				jedisClient.hset(REDIS_CART_PRE + ":" + userId, item.getId() + "", JsonUtils.objectToJson(item));
 			}
 		}
@@ -156,8 +156,8 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public E3Result resetCartItem(long userId) {
 		List<TbItem> allCartList = getCartList(userId);
-		for(TbItem item:allCartList){
-			item.setStatus((byte) '0');
+		for (TbItem item : allCartList) {
+			item.setStatus((byte) 0);
 			jedisClient.hset(REDIS_CART_PRE + ":" + userId, item.getId() + "", JsonUtils.objectToJson(item));
 		}
 		return E3Result.ok();

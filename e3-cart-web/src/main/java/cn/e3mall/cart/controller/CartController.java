@@ -25,203 +25,253 @@ import cn.e3mall.service.ItemService;
 
 /**
  * 购物车处理Controller
- * <p>Title: CartController</p>
- * <p>Description: </p>
- * <p>Company: www.itcast.cn</p> 
+ * <p>
+ * Title: CartController
+ * </p>
+ * <p>
+ * Description:
+ * </p>
+ * <p>
+ * Company: www.itcast.cn
+ * </p>
+ * 
  * @version 1.0
  */
 @Controller
 public class CartController {
-	
+
 	@Value("${COOKIE_CART_EXPIRE}")
 	private Integer COOKIE_CART_EXPIRE;
-	
+
 	@Autowired
 	private ItemService itemService;
 	@Autowired
 	private CartService cartService;
 
 	@RequestMapping("/cart/add/{itemId}")
-	public String addCart(@PathVariable Long itemId, @RequestParam(defaultValue="1")Integer num,
+	public String addCart(@PathVariable Long itemId, @RequestParam(defaultValue = "1") Integer num,
 			HttpServletRequest request, HttpServletResponse response) {
-		//判断用户是否登录
+		// 判断用户是否登录
 		TbUser user = (TbUser) request.getAttribute("user");
-		//如果是登录状态，把购物车写入redis
+		// 如果是登录状态，把购物车写入redis
 		if (user != null) {
-			//保存到服务端
+			// 保存到服务端
 			cartService.addCart(user.getId(), itemId, num);
-			//返回逻辑视图
+			// 返回逻辑视图
 			return "cartSuccess";
 		}
-		//如果未登录使用cookie
-		//从cookie中取购物车列表
+		// 如果未登录使用cookie
+		// 从cookie中取购物车列表
 		List<TbItem> cartList = getCartListFromCookie(request);
-		//判断商品在商品列表中是否存在
+		// 判断商品在商品列表中是否存在
 		boolean flag = false;
 		for (TbItem tbItem : cartList) {
-			//如果存在数量相加
+			// 如果存在数量相加
 			if (tbItem.getId() == itemId.longValue()) {
 				flag = true;
-				//找到商品，数量相加
+				// 找到商品，数量相加
 				tbItem.setNum(tbItem.getNum() + num);
-				//跳出循环
+				// 跳出循环
 				break;
 			}
 		}
-		//如果不存在
+		// 如果不存在
 		if (!flag) {
-			//根据商品id查询商品信息。得到一个TbItem对象
+			// 根据商品id查询商品信息。得到一个TbItem对象
 			TbItem tbItem = itemService.getItemById(itemId);
-			//设置商品数量
+			// 设置商品数量
 			tbItem.setNum(num);
-			//取一张图片
+			// 取一张图片
 			String image = tbItem.getImage();
 			if (StringUtils.isNotBlank(image)) {
 				tbItem.setImage(image.split(",")[0]);
 			}
-			//把商品添加到商品列表
+			// 把商品添加到商品列表
 			cartList.add(tbItem);
 		}
-		//写入cookie
+		// 写入cookie
 		CookieUtils.setCookie(request, response, "cart", JsonUtils.objectToJson(cartList), COOKIE_CART_EXPIRE, true);
-		//返回添加成功页面
+		// 返回添加成功页面
 		return "cartSuccess";
 	}
-	
+
 	/**
 	 * 从cookie中取购物车列表的处理
-	 * <p>Title: getCartListFromCookie</p>
-	 * <p>Description: </p>
+	 * <p>
+	 * Title: getCartListFromCookie
+	 * </p>
+	 * <p>
+	 * Description:
+	 * </p>
+	 * 
 	 * @param request
 	 * @return
 	 */
 	private List<TbItem> getCartListFromCookie(HttpServletRequest request) {
 		String json = CookieUtils.getCookieValue(request, "cart", true);
-		//判断json是否为空
+		// 判断json是否为空
 		if (StringUtils.isBlank(json)) {
 			return new ArrayList<>();
 		}
-		//把json转换成商品列表
+		// 把json转换成商品列表
 		List<TbItem> list = JsonUtils.jsonToList(json, TbItem.class);
 		return list;
 	}
-	
+
 	/**
 	 * 展示购物车列表
-	 * <p>Title: showCatList</p>
-	 * <p>Description: </p>
+	 * <p>
+	 * Title: showCatList
+	 * </p>
+	 * <p>
+	 * Description:
+	 * </p>
+	 * 
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping("/cart/cart")
 	public String showCatList(HttpServletRequest request, HttpServletResponse response) {
-		//从cookie中取购物车列表
+		// 从cookie中取购物车列表
 		List<TbItem> cartList = getCartListFromCookie(request);
-		//判断用户是否为登录状态
+		// 判断用户是否为登录状态
 		TbUser user = (TbUser) request.getAttribute("user");
-		//如果是登录状态
+		// 如果是登录状态
 		if (user != null) {
-			//从cookie中取购物车列表
-			//如果不为空，把cookie中的购物车商品和服务端的购物车商品合并。
+			// 从cookie中取购物车列表
+			// 如果不为空，把cookie中的购物车商品和服务端的购物车商品合并。
 			cartService.mergeCart(user.getId(), cartList);
-			//把cookie中的购物车删除
+			// 把cookie中的购物车删除
 			CookieUtils.deleteCookie(request, response, "cart");
-			//从服务端取购物车列表
+			// 从服务端取购物车列表
 			cartList = cartService.getCartList(user.getId());
-			
+
 		}
-		//把列表传递给页面
+		// 把列表传递给页面
 		request.setAttribute("cartList", cartList);
-		//返回逻辑视图
+		// 返回逻辑视图
 		return "cart";
 	}
-	
+
 	/**
 	 * 更新购物车商品数量
 	 */
 	@RequestMapping("/cart/update/num/{itemId}/{num}")
 	@ResponseBody
-	public String updateCartNum(@PathVariable Long itemId, @PathVariable Integer num
-			, HttpServletRequest request ,HttpServletResponse response) {
-		//判断用户是否为登录状态
+	public String updateCartNum(@PathVariable Long itemId, @PathVariable Integer num, HttpServletRequest request,
+			HttpServletResponse response) {
+		// 判断用户是否为登录状态
 		TbUser user = (TbUser) request.getAttribute("user");
 		if (user != null) {
 			cartService.updateCartNum(user.getId(), itemId, num);
 			return itemId.toString();
 		}
-		//从cookie中取购物车列表
+		// 从cookie中取购物车列表
 		List<TbItem> cartList = getCartListFromCookie(request);
-		//遍历商品列表找到对应的商品
+		// 遍历商品列表找到对应的商品
 		for (TbItem tbItem : cartList) {
 			if (tbItem.getId().longValue() == itemId) {
-				//更新数量
+				// 更新数量
 				tbItem.setNum(num);
 				break;
 			}
 		}
-		//把购物车列表写回cookie
+		// 把购物车列表写回cookie
 		CookieUtils.setCookie(request, response, "cart", JsonUtils.objectToJson(cartList), COOKIE_CART_EXPIRE, true);
-		//返回成功
+		// 返回成功
 		return itemId.toString();
 	}
-	
+
 	/**
 	 * 删除购物车商品
 	 */
 	@RequestMapping("/cart/delete/{itemId}")
-	public String deleteCartItem(@PathVariable Long itemId, HttpServletRequest request,
-			HttpServletResponse response) {
-		//判断用户是否为登录状态
+	public String deleteCartItem(@PathVariable Long itemId, HttpServletRequest request, HttpServletResponse response) {
+		// 判断用户是否为登录状态
 		TbUser user = (TbUser) request.getAttribute("user");
 		if (user != null) {
 			cartService.deleteCartItem(user.getId(), itemId);
 			return "redirect:/cart/cart.html";
 		}
-		//从cookie中取购物车列表
+		// 从cookie中取购物车列表
 		List<TbItem> cartList = getCartListFromCookie(request);
-		//遍历列表，找到要删除的商品
+		// 遍历列表，找到要删除的商品
 		for (TbItem tbItem : cartList) {
 			if (tbItem.getId().longValue() == itemId) {
-				//删除商品
+				// 删除商品
 				cartList.remove(tbItem);
-				//跳出循环
+				// 跳出循环
 				break;
 			}
 		}
-		//把购物车列表写入cookie
+		// 把购物车列表写入cookie
 		CookieUtils.setCookie(request, response, "cart", JsonUtils.objectToJson(cartList), COOKIE_CART_EXPIRE, true);
-		//返回逻辑视图
+		// 返回逻辑视图
 		return "redirect:/cart/cart.html";
 	}
-	
+
+	/**
+	 * 删除购物车商品2
+	 */
+	@RequestMapping("/cart/deleteProduces/{itemId}")
+	@ResponseBody
+	public E3Result deleteCartItem2(@PathVariable Long itemId, HttpServletRequest request,
+			HttpServletResponse response) {
+		// 判断用户是否为登录状态
+		TbUser user = (TbUser) request.getAttribute("user");
+		if (user != null) {
+			cartService.deleteCartItem(user.getId(), itemId);
+			return E3Result.ok();
+		}
+		// 从cookie中取购物车列表
+		List<TbItem> cartList = getCartListFromCookie(request);
+		// 遍历列表，找到要删除的商品
+		for (TbItem tbItem : cartList) {
+			if (tbItem.getId().longValue() == itemId) {
+				// 删除商品
+				cartList.remove(tbItem);
+				// 跳出循环
+				break;
+			}
+		}
+		// 把购物车列表写入cookie
+		CookieUtils.setCookie(request, response, "cart", JsonUtils.objectToJson(cartList), COOKIE_CART_EXPIRE, true);
+		// 不返回逻辑视图
+		return E3Result.ok();
+	}
+
 	/**
 	 * 更新购物车商品状态
 	 */
 	@RequestMapping("/cart/update/status/{itemId}/{status}")
-	public E3Result updateCartStatus(@PathVariable Long itemId, Byte status,HttpServletRequest request,
+	@ResponseBody
+	public E3Result updateCartStatus(@PathVariable Long itemId,@PathVariable String status, HttpServletRequest request,
 			HttpServletResponse response) {
-		//判断用户是否为登录状态
-		TbUser user = (TbUser) request.getAttribute("user");
+		// 判断用户是否为登录状态
+		TbUser user = (TbUser) request.getAttribute("user");	
 		if (user != null) {
-			cartService.updateCartNum(user.getId(), itemId, status);
-			return E3Result.ok();
-		}else {
-			return E3Result.build(201, "未登录");
-		}
-/*		//从cookie中取购物车列表
-		List<TbItem> cartList = getCartListFromCookie(request);
-		//遍历商品列表找到对应的商品
-		for (TbItem tbItem : cartList) {
-			if (tbItem.getId().longValue() == itemId) {
-				//更新数量
-				tbItem.setStatus(status);
-				break;
+			try {
+				cartService.updateCartStatus(user.getId(), itemId, (byte) Integer.parseInt(status));
+			} catch (Exception e) {
+				// TODO: handle exception
 			}
+		} else {
+			// 从cookie中取购物车列表
+			List<TbItem> cartList = getCartListFromCookie(request);
+			// 遍历商品列表找到对应的商品
+			for (TbItem tbItem : cartList) {
+				if (tbItem.getId().longValue() == itemId) {
+					// 更新数量
+					try {
+						tbItem.setStatus((byte) Integer.parseInt(status));
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+				}
+			}
+			CookieUtils.setCookie(request, response, "cart", JsonUtils.objectToJson(cartList), COOKIE_CART_EXPIRE,
+					true);
 		}
-		//把购物车列表写回cookie
-		CookieUtils.setCookie(request, response, "cart", JsonUtils.objectToJson(cartList), COOKIE_CART_EXPIRE, true);
-		//返回成功
-		return E3Result.ok();*/
+		return E3Result.ok();
 	}
-	
 }

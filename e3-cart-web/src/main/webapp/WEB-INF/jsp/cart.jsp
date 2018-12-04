@@ -19,6 +19,7 @@
 <script type="text/javascript" src="/js/jquery.price_format.2.0.min.js"></script>
 <script type="text/javascript" src="/js/jquery.alerts.js?v=20160713"></script>
 <script type="text/javascript" src="/js/cart.js?v=20160713"></script>
+<script type="text/javascript" src="/js/cart2.js"></script>
  <script type="text/javascript" src="/js/cookie.js?v=20160416222"></script>
 <script type="text/javascript" src="/js/shadow.js?v=20160416"></script>
 <script type="text/javascript" src="/js/common.js"></script>
@@ -34,7 +35,7 @@
 	</div>
 	<div class="cartMain">
       <div class="cartThead">
-        <div class="tCol tCheckbox"><input name="acart_list_check" id="Zall" type="checkbox" checked="checked"> 全选</div>
+        <div class="tCol tCheckbox"><input name="acart_list_check" id="Zall" type="checkbox" onclick="allselect()"> 全选</div>
         <div class="tCol tGoods">商品</div>
         <div class="tCol tPrice">单价</div>
         <div class="tCol tPromotion">优惠</div>
@@ -61,7 +62,7 @@
 				<div class="cartPInfo" id="danjian-0-229363">
 					<div class="clearit">
 						<div class="pItem pCheckbox">
-							<input name="cart_list" class="putong"	value="danjian-0-229363" type="checkbox" checked="checked"/>
+							<input name="cart_list" class="putong"	value="danjian-0-229363" type="checkbox" onclick="singleselect(${cart.id})"/>
 						</div>
 						<div class="pItem pGoods">
 							<div class="cart_pimg">
@@ -108,11 +109,11 @@
       <div class="cartOrderCount" id="orderCount">
         <div class="cartButtons">
           <input type="button" value="删除选中的商品" onclick="javascript:cartDelMore();" class="cartclear">
-          <input type="button" value="清空购物车" onclick="javascript:delAll('273fe391cb449af4');" class="cartclear">
+          <input type="button" value="清空购物车" onclick="javascript:delAll();" class="cartclear">
         </div>
         <div class="cartTotalItem">
           <span id="all_shopePrice">（不含运费）</span>&nbsp;&nbsp;&nbsp;&nbsp;商品总计：
-          <span class="cartPrice" id="allMoney2">¥<fmt:formatNumber value="${totalPrice / 100}" maxFractionDigits="2" minFractionDigits="2" groupingUsed="true"/>
+          <span class="cartPrice" id="allMoney2">¥<fmt:formatNumber value="0"/>
           </span>
         </div>
       </div>
