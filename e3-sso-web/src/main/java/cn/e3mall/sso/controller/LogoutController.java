@@ -29,7 +29,6 @@ import cn.e3mall.sso.service.LogoutService;
  */
 @Controller
 public class LogoutController {
-
 	@Value("${PORTAL_URL}")
 	private String PORTAL_URL;
 
