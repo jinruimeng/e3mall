@@ -1,7 +1,10 @@
 package cn.e3mall.sso.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,7 +28,7 @@ public class RegitsterController {
 	private RegisterService registerService;
 	
 	@RequestMapping("/page/register")
-	public String showRegister() {
+	public String showRegister(Model model, HttpServletRequest request) {
 		return "register";
 	}
 	

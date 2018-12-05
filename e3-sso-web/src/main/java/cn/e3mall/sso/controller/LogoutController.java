@@ -29,7 +29,6 @@ import cn.e3mall.sso.service.LogoutService;
  */
 @Controller
 public class LogoutController {
-
 	@Value("${PORTAL_URL}")
 	private String PORTAL_URL;
 
@@ -43,7 +42,7 @@ public class LogoutController {
 //		response.sendRedirect("http://139.196.90.105:8180");
 //		response.sendRedirect(PORTAL_URL);
 		String strReferer = request.getHeader("Referer");
-		if(strReferer.length() != 0) {
+		if(strReferer != null) {
 			response.sendRedirect(strReferer);
 		}else {
 			response.sendRedirect(PORTAL_URL);

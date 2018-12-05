@@ -29,7 +29,7 @@
 <!-- reg_main -->
 <div class="tabBox clear">
     <span class="reg_hide reg_show regMr5" id="regper">个人用户</span>
-    <span class="reg_hide" id="regcom" style="">企业用户</span>    <div class="login">已有账号，立即 <a href="/page/login">登录</a></div>
+    <span class="reg_hide" id="regcom" style="">企业用户</span>    <div class="login">已有账号，立即 <a href="/page/login/?redirect=http://139.196.90.105:8180">登录</a></div>
 </div>
 <!--个人用户-->
 <div class="reg_main reg_border regTab" id="perDiv">
@@ -175,7 +175,7 @@
 			});
 		},
 		login:function() {
-			 location.href = "/page/login";
+			 location.href = "/page/login/?redirect=http://139.196.90.105:8180";
 			 return false;
 		},
 		reg:function() {
