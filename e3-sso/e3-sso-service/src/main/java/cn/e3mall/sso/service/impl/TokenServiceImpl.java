@@ -32,7 +32,7 @@ public class TokenServiceImpl implements TokenService {
 		String json = jedisClient.get("SESSION:" + token);
 		//取不到用户信息，登录已经过期，返回登录过期
 		if (StringUtils.isBlank(json)) {
-			return E3Result.build(ErrorCode.NO_CONTENT.getErrorCode(), "用户登录已经过期");
+			return E3Result.build(201, "用户登录已经过期");
 		}
 		//取到用户信息更新token的过期时间
 		jedisClient.expire("SESSION:" + token, SESSION_EXPIRE);
